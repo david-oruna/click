@@ -6,33 +6,34 @@
     <title>Click Counter Game</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
-<header>
-    <h1>Menu</h1>
-    <!-- Add any content you want for the header -->
-</header>
-
 <body>
-    
-
-    <div id="container">
+    <div id="loginContainer">
+        <h1>Welcome to ClickRush</h1>
+        <form id="loginForm">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            <br>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <br>
+            <button type="submit">Login</button>
+            <p id="loginError" style="color: red;"></p>
+        </form>
+    </div>
+    <div id="gameContainer" style="display: none;">
         <h1>Clickrush</h1>
-        <label for="timeSelect">Select: </label>
-        <select id ="timeSelect">
-            <option value="5 seconds">5</option>
-            <option value="10 seconds">10</option>
-            <option value="15 seconds">15</option>
-    
+        <label for="timeSelect">Select time: </label>
+        <select id="timeSelect">
+            <option value="5">5 seconds</option>
+            <option value="10">10 seconds</option>
+            <option value="15">15 seconds</option>
         </select>
-        <h1 id="countdown"></h1>
+        <h1 id="countdown">5</h1>
         <button id="clickButton" class="bigger-button">Click me!</button>
         <p id="clickCount">Clicks: 0</p>
         <p id="latestScore">Latest Score: 0</p>
         <p id="highestScore">Highest Score: 0</p>
-        <br></br>
-        <p>Thanks for playing!</p>
-        <script src="main.js"></script>
     </div>
-
-
+    <script src="main.js"></script>
 </body>
 </html>

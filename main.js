@@ -1,38 +1,64 @@
-let countdown;
-let clickCount = 0;
-let highestScore = 0;
-let latestScore = 0;
-let countdownInterval;
+document.addEventListener("DOMContentLoaded", () => {
+    const loginForm = document.getElementById("loginForm");
+    const loginError = document.getElementById("loginError");
+    const loginContainer = document.getElementById("loginContainer");
+    const gameContainer = document.getElementById("gameContainer");
 
-function startCountdown() {
-    const countdownElement = document.getElementById("countdown");
+    loginForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+
+        // Simple validation (replace with actual validation logic)
+        if (username === "admin" && password === "password") {
+            loginContainer.style.display = "none";
+            gameContainer.style.display = "block";
+        } else {
+            loginError.textContent = "Invalid username or password";
+        }
+    });
+
+    // Existing game logic
     const clickButton = document.getElementById("clickButton");
     const clickCountElement = document.getElementById("clickCount");
     const latestScoreElement = document.getElementById("latestScore");
     const highestScoreElement = document.getElementById("highestScore");
     const timeSelect = document.getElementById("timeSelect");
 
+    let countdown;
+    let clickCount = 0;
+    let countdownInterval;
+
+    const scores = {
+        5: { latest: 0, highest: 0 },
+        10: { latest: 0, highest: 0 },
+        15: { latest: 0, highest: 0 }
+    };
+
     clickButton.addEventListener("click", () => {
         if (!countdownInterval) {
             countdown = parseInt(timeSelect.value);
-            countdownElement.textContent = countdown;
+            document.getElementById("countdown").textContent = countdown;
             clickCount = 0;
             clickCountElement.textContent = `Clicks: ${clickCount}`;
+            timeSelect.disabled = true; // Disable time selection
             countdownInterval = setInterval(() => {
                 countdown--;
-                countdownElement.textContent = countdown;
+                document.getElementById("countdown").textContent = countdown;
                 if (countdown === 0) {
                     clearInterval(countdownInterval);
                     countdownInterval = null;
                     clickButton.disabled = true;
-                    latestScore = clickCount;
-                    if (clickCount > highestScore) {
-                        highestScore = clickCount;
+                    const selectedTime = timeSelect.value;
+                    scores[selectedTime].latest = clickCount;
+                    if (clickCount > scores[selectedTime].highest) {
+                        scores[selectedTime].highest = clickCount;
                     }
-                    latestScoreElement.textContent = `Latest Score: ${latestScore}`;
-                    highestScoreElement.textContent = `Highest Score: ${highestScore}`;
+                    latestScoreElement.textContent = `Latest Score: ${scores[selectedTime].latest}`;
+                    highestScoreElement.textContent = `Highest Score: ${scores[selectedTime].highest}`;
                     setTimeout(() => {
                         clickButton.disabled = false;
+                        timeSelect.disabled = false; // Enable time selection
                     }, 1000);
                 }
             }, 1000);
@@ -40,6 +66,10 @@ function startCountdown() {
         clickCount++;
         clickCountElement.textContent = `Clicks: ${clickCount}`;
     });
-}
 
-startCountdown();
+    timeSelect.addEventListener("change", () => {
+        const selectedTime = timeSelect.value;
+        latestScoreElement.textContent = `Latest Score: ${scores[selectedTime].latest}`;
+        highestScoreElement.textContent = `Highest Score: ${scores[selectedTime].highest}`;
+    });
+});
