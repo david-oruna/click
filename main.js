@@ -1,4 +1,4 @@
-let countdown = 5;
+let countdown;
 let clickCount = 0;
 let highestScore = 0;
 let latestScore = 0;
@@ -10,9 +10,11 @@ function startCountdown() {
     const clickCountElement = document.getElementById("clickCount");
     const latestScoreElement = document.getElementById("latestScore");
     const highestScoreElement = document.getElementById("highestScore");
+    const timeSelect = document.getElementById("timeSelect");
 
     clickButton.addEventListener("click", () => {
-        if (countdown === 5) {
+        if (!countdownInterval) {
+            countdown = parseInt(timeSelect.value);
             countdownElement.textContent = countdown;
             clickCount = 0;
             clickCountElement.textContent = `Clicks: ${clickCount}`;
@@ -21,6 +23,7 @@ function startCountdown() {
                 countdownElement.textContent = countdown;
                 if (countdown === 0) {
                     clearInterval(countdownInterval);
+                    countdownInterval = null;
                     clickButton.disabled = true;
                     latestScore = clickCount;
                     if (clickCount > highestScore) {
@@ -29,7 +32,6 @@ function startCountdown() {
                     latestScoreElement.textContent = `Latest Score: ${latestScore}`;
                     highestScoreElement.textContent = `Highest Score: ${highestScore}`;
                     setTimeout(() => {
-                        countdown = 5;
                         clickButton.disabled = false;
                     }, 1000);
                 }

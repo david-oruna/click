@@ -16,7 +16,14 @@
 
     <div id="container">
         <h1>Clickrush</h1>
-        <h1 id="countdown">5</h1>
+        <label for="timeSelect">Select: </label>
+        <select id ="timeSelect">
+            <option value="5 seconds">5</option>
+            <option value="10 seconds">10</option>
+            <option value="15 seconds">15</option>
+    
+        </select>
+        <h1 id="countdown"></h1>
         <button id="clickButton" class="bigger-button">Click me!</button>
         <p id="clickCount">Clicks: 0</p>
         <p id="latestScore">Latest Score: 0</p>
