@@ -6,4 +6,11 @@ body {
     font-family: 'Times New Roman', Times, serif;
     color: white;
     background-color: black;
+    height: 100vh;
 }
+
+.bigger-button {
+    font-size: large;
+    padding: 10px 20px;
+}
+

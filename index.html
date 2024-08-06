@@ -1,17 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>My first page</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Click Counter Game</title>
     <link rel="stylesheet" href="css/style.css">
-    <script src="main.js"></script>
-    <script>
-        
-    </script>
 </head>
-
 <body>
-    <div>
-        <h1 class="title">Hey now I'm creating this file</h1>
-        <p>I'm sleepy</p>
-        <button onclick="incrementCounter()">Click me</button>
-        <p>Counter: <span id="counter">0</span></p>
+    <div id ="container">
+        <h1>Clickrush</h1>
+        <h1 id="countdown">5</h1>
+        <button id="clickButton" class="bigger-button">Click me!</button>
+        <p id="clickCount">Clicks: 0</p>
+        <p id="latestScore">Latest Score: 0</p>
+        <p id="highestScore">Highest Score: 0</p>
+        <script src="main.js"></script>
+
     </div>
+    
 </body>
+</html>
