@@ -1,5 +1,6 @@
 body {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
@@ -9,8 +10,29 @@ body {
     height: 100vh;
 }
 
+header {
+    position: fixed;
+    top: 0;
+    background-color: gray;
+    padding: 20px;
+    color: white;
+    width: 100%; /* Make the header span the full width */
+}
+
+footer {
+    background-color: gray;
+    padding: 20px;
+    color: white;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 .bigger-button {
     font-size: large;
     padding: 10px 20px;
 }
-
