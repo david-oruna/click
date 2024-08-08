@@ -36,10 +36,10 @@ app.get('/health', async (req, res) => {
 
 // Route for /game
 app.get('/game', (req, res) => {
-    res.send('Game route is working');
+    res.sendFile(path.join(__dirname, '../public/game.html'));
 });
 
-// Routes
+// Register route
 app.post('/register', async (req, res) => {
     const { username, password } = req.body;
     const { data, error } = await supabase
@@ -48,7 +48,23 @@ app.post('/register', async (req, res) => {
     if (error) {
         res.status(500).send('Error registering user');
     } else {
-        res.send('User registered');
+        res.redirect('/game');
+    }
+});
+
+// Login route
+app.post('/login', async (req, res) => {
+    const { username, password } = req.body;
+    const { data, error } = await supabase
+        .from('users')
+        .select('*')
+        .eq('username', username)
+        .eq('password', password)
+        .single();
+    if (error || !data) {
+        res.status(401).send('Invalid username or password');
+    } else {
+        res.redirect('/game');
     }
 });
 
