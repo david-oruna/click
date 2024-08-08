@@ -46,7 +46,7 @@ document.getElementById('registerForm').addEventListener('submit', async (event)
     }
     });
 
-document.getElementById('loginForm').addEventListener('submit', async (event) => {
+document.getElementById('loginFormElement').addEventListener('submit', async (event) => {
     event.preventDefault();
     const username = document.getElementById('loginUsername').value;
     const password = document.getElementById('loginPassword').value;
@@ -64,7 +64,7 @@ document.getElementById('loginForm').addEventListener('submit', async (event) =>
     } else {
         window.location.href = '/game';
     }
-    });
+});
 
 clickButton.addEventListener("click", () => {
     if (!countdownInterval) {
