@@ -39,16 +39,31 @@ footer {
 }
 
 /* Center the login container */
-#loginContainer {
+#loginContainer{
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
     height: 100vh;
 }
+/* Style the login and register buttons */
+#loginContainer button {
+    width: 150px;
+    padding: 10px;
+    margin: 10px;
+    background-color: gray;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
 
+#loginContainer button:hover {
+    background-color: darkgray;
+}
 /* Style the login form */
-#loginForm {
+#loginForm, #registerForm {
     padding: 20px;
     border-radius: 8px;
     width: 300px;
@@ -56,8 +71,8 @@ footer {
 }
 
 /* Style the input fields */
-#loginForm input[type="text"],
-#loginForm input[type="password"] {
+#loginForm input[type="text"], #registerForm input[type="text"],
+#loginForm input[type="password"], #registerForm input[type="password"] {
     width: 100%;
     padding: 10px;
     margin: 10px 0;
@@ -66,7 +81,7 @@ footer {
 }
 
 /* Style the submit button */
-#loginForm button {
+#loginForm button , #registerForm button {
     width: 110%;
     padding: 10px;
     background-color: gray;
@@ -76,12 +91,6 @@ footer {
     cursor: pointer;
 }
 
-#loginForm button:hover {
+#loginForm button:hover , #registerForm button:hover {
     background-color: gray;
-}
-
-/* Style the error message */
-#loginError {
-    color: red;
-    margin-top: 10px;
 }
