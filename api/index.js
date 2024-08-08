@@ -1,7 +1,9 @@
+require('dotenv').config();
+
 const express = require('express');
 const bodyParser = require('body-parser');
-const mysql = require('mysql');
 const path = require('path');
+const { createClient } = require('@supabase/supabase-js');
 
 const app = express();
 
@@ -9,40 +11,36 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, '../public')));
 
-// MySQL connection
-const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'users_clickrush'
-});
-
-db.connect((err) => {
-    if (err) throw err;
-    console.log('Connected to database');
-});
+// Supabase client
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_KEY);
 
 // Routes
-app.post('/register', (req, res) => {
+app.post('/register', async (req, res) => {
     const { username, password } = req.body;
-    const query = 'INSERT INTO users (username, password) VALUES (?, ?)';
-    db.query(query, [username, password], (err, result) => {
-        if (err) throw err;
+    const { data, error } = await supabase
+        .from('users')
+        .insert([{ username, password }]);
+    if (error) {
+        res.status(500).send('Error registering user');
+    } else {
         res.send('User registered');
-    });
+    }
 });
 
-app.post('/login', (req, res) => {
+app.post('/login', async (req, res) => {
     const { username, password } = req.body;
-    const query = 'SELECT * FROM users WHERE username = ? AND password = ?';
-    db.query(query, [username, password], (err, results) => {
-        if (err) throw err;
-        if (results.length > 0) {
-            res.send('Login successful');
-        } else {
-            res.send('Invalid credentials');
-        }
-    });
+    const { data, error } = await supabase
+        .from('users')
+        .select('*')
+        .eq('username', username)
+        .eq('password', password);
+    if (error) {
+        res.status(500).send('Error logging in');
+    } else if (data.length > 0) {
+        res.send('Login successful');
+    } else {
+        res.send('Invalid credentials');
+    }
 });
 
 app.get('/game', (req, res) => {
