@@ -46,7 +46,12 @@ app.post('/register', async (req, res) => {
         .from('users')
         .insert([{ username, password }]);
     if (error) {
-        res.status(500).json({ message: 'Error registering user' });
+        res.send(`
+            <script>
+                alert('Error registering user');
+                window.location.href = '/register';
+            </script>
+        `);
     } else {
         res.redirect('/game');
     }
@@ -62,8 +67,13 @@ app.post('/login', async (req, res) => {
         .eq('password', password)
         .single();
     if (error || !data) {
-        res.status(401).json({ message: 'Invalid username or password' });
-    } else {
+        res.send(`
+            <script>
+                alert('Invalid username or password');
+                window.location.href = '/login';
+            </script>
+        `);
+    } else {                                                    
         res.redirect('/game');
     }
 });
