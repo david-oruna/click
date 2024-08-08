@@ -46,7 +46,7 @@ app.post('/register', async (req, res) => {
         .from('users')
         .insert([{ username, password }]);
     if (error) {
-        res.status(500).send('Error registering user');
+        res.status(500).json({ message: 'Error registering user' });
     } else {
         res.redirect('/game');
     }
@@ -62,7 +62,7 @@ app.post('/login', async (req, res) => {
         .eq('password', password)
         .single();
     if (error || !data) {
-        res.status(401).send('Invalid username or password');
+        res.status(401).json({ message: 'Invalid username or password' });
     } else {
         res.redirect('/game');
     }
