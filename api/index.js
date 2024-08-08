@@ -67,7 +67,6 @@ app.post('/login', async (req, res) => {
         res.redirect('/game');
     }
 });
-
 // Start the server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

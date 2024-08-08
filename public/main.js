@@ -1,13 +1,3 @@
-function showForm(formType) {
-    document.getElementById('registerForm').style.display = 'none';
-    document.getElementById('loginForm').style.display = 'none';
-
-    if (formType === 'register') {
-      document.getElementById('registerForm').style.display = 'block';
-    } else if (formType === 'login') {
-      document.getElementById('loginForm').style.display = 'block';
-    }
-  }
 const clickButton = document.getElementById("clickButton");
 const clickCountElement = document.getElementById("clickCount");
 const latestScoreElement = document.getElementById("latestScore");
@@ -23,6 +13,58 @@ const scores = {
     10: { latest: 0, highest: 0 },
     15: { latest: 0, highest: 0 }
 };
+
+function showForm(formType) {
+    document.getElementById('registerForm').style.display = 'none';
+    document.getElementById('loginForm').style.display = 'none';
+
+    if (formType === 'register') {
+      document.getElementById('registerForm').style.display = 'block';
+    } else if (formType === 'login') {
+      document.getElementById('loginForm').style.display = 'block';
+    }
+  }
+
+
+document.getElementById('registerForm').addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const username = document.getElementById('registerUsername').value;
+    const password = document.getElementById('registerPassword').value;
+    const response = await fetch('/register', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, password })
+    });
+
+    const result = await response.json();
+    if (!response.ok) {
+        document.getElementById('registerError').textContent = result.message;
+    } else {
+        window.location.href = '/game';
+    }
+    });
+
+document.getElementById('loginForm').addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const username = document.getElementById('loginUsername').value;
+    const password = document.getElementById('loginPassword').value;
+    const response = await fetch('/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, password })
+    });
+
+    const result = await response.json();
+    if (!response.ok) {
+        document.getElementById('loginError').textContent = result.message;
+    } else {
+        window.location.href = '/game';
+    }
+    });
 
 clickButton.addEventListener("click", () => {
     if (!countdownInterval) {
@@ -61,3 +103,4 @@ timeSelect.addEventListener("change", () => {
     latestScoreElement.textContent = `Latest Score: ${scores[selectedTime].latest}`;
     highestScoreElement.textContent = `Highest Score: ${scores[selectedTime].highest}`;
 });
+
