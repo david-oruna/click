@@ -39,12 +39,14 @@ function showForm(formType) {
     });
 
     const result = await response.json();
+    console.log(result); // Add this line to log the result
     if (!response.ok) {
         document.getElementById('registerError').textContent = result.message;
     } else {
         window.location.href = '/game';
     }
 });
+
 
 document.getElementById('loginFormElement').addEventListener('submit', async (event) => {
     event.preventDefault();
@@ -59,6 +61,8 @@ document.getElementById('loginFormElement').addEventListener('submit', async (ev
     });
 
     const result = await response.json();
+    console.log(result); // Add this line to log the result
+
     if (!response.ok) {
         document.getElementById('loginError').textContent = result.message;
     } else {
