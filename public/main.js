@@ -26,11 +26,11 @@ function showForm(formType) {
   }
 
 
-document.getElementById('registerForm').addEventListener('submit', async (event) => {
+  document.getElementById('registerFormElement').addEventListener('submit', async (event) => {
     event.preventDefault();
     const username = document.getElementById('registerUsername').value;
     const password = document.getElementById('registerPassword').value;
-    const response = await fetch('/register', {
+    const response = await fetch('/api/register', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -44,13 +44,13 @@ document.getElementById('registerForm').addEventListener('submit', async (event)
     } else {
         window.location.href = '/game';
     }
-    });
+});
 
 document.getElementById('loginFormElement').addEventListener('submit', async (event) => {
     event.preventDefault();
     const username = document.getElementById('loginUsername').value;
     const password = document.getElementById('loginPassword').value;
-    const response = await fetch('/login', {
+    const response = await fetch('/api/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -65,6 +65,7 @@ document.getElementById('loginFormElement').addEventListener('submit', async (ev
         window.location.href = '/game';
     }
 });
+
 
 clickButton.addEventListener("click", () => {
     if (!countdownInterval) {

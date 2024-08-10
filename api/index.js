@@ -40,41 +40,40 @@ app.get('/game', (req, res) => {
 });
 
 // Register route
+// Register route
 app.post('/register', async (req, res) => {
     const { username, password } = req.body;
-    const { data, error } = await supabase
-        .from('users')
-        .insert([{ username, password }]);
-    if (error) {
-        res.send(`
-            <script>
-                alert('Error registering user');
-                window.location.href = '/register';
-            </script>
-        `);
-    } else {
-        res.redirect('/game');
+    try {
+        const { data, error } = await supabase
+            .from('users')
+            .insert([{ username, password }]);
+        if (error) {
+            res.status(400).json({ success: false, message: 'Error registering user' });
+        } else {
+            res.status(200).json({ success: true });
+        }
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Server error' });
     }
 });
 
 // Login route
 app.post('/login', async (req, res) => {
     const { username, password } = req.body;
-    const { data, error } = await supabase
-        .from('users')
-        .select('*')
-        .eq('username', username)
-        .eq('password', password)
-        .single();
-    if (error || !data) {
-        res.send(`
-            <script>
-                alert('Invalid username or password');
-                window.location.href = '/login';
-            </script>
-        `);
-    } else {                                                    
-        res.redirect('/game');
+    try {
+        const { data, error } = await supabase
+            .from('users')
+            .select('*')
+            .eq('username', username)
+            .eq('password', password)
+            .single();
+        if (error || !data) {
+            res.status(400).json({ success: false, message: 'Invalid username or password' });
+        } else {
+            res.status(200).json({ success: true });
+        }
+    } catch (error) {
+        res.status(500).json({ success: false, message: 'Server error' });
     }
 });
 // Start the server
